@@ -1,15 +1,68 @@
-:root {
-    /* Catppuccin Mocha 테마 색상 */
-    --bg: #1e1e2e;
-    --text: #cdd6f4;
-    --subtext: #a6adc8;
-    --primary: #89b4fa;
-    --secondary: #f5c2e7;
-    --accent: #f38ba8;
-    --surface: #313244;
-    --overlay: #6c7086;
+/* 폰트 설정 */
+:root { 
+    font-family: "Inter", sans-serif; 
 }
 
+@supports (font-variation-settings: normal) {
+    :root { 
+        font-family: "InterVariable", sans-serif; 
+        font-optical-sizing: auto; 
+    }
+}
+
+/* 색상 팔레트 - 라이트 모드 */
+:root {
+    --palette-base: #fff;
+    --palette-50: oklch(0.98 0.005 95.9);          /* #fafafa */
+    --palette-100: oklch(0.97 0.003 107.8);        /* #f5f5f5 */
+    --palette-200: oklch(0.93 0.003 107.8);        /* #e5e5e5 */
+    --palette-300: oklch(0.89 0.003 107.8);        /* #d4d4d4 */
+    --palette-400: oklch(0.74 0.003 107.8);        /* #a3a3a3 */
+    --palette-500: oklch(0.6 0.003 107.8);         /* #737373 */
+    --palette-600: oklch(0.5 0.003 107.8);         /* #525252 */
+    --palette-700: oklch(0.45 0.003 107.8);        /* #404040 */
+    --palette-800: oklch(0.35 0.003 107.8);        /* #262626 */
+    --palette-900: oklch(0.3 0.003 107.8);         /* #171717 */
+    --palette-950: oklch(0.25 0.003 107.8);        /* #0a0a0a */
+
+    /* 테마 색상 */
+    --color-white: #fff;
+    --color-black: #000;
+    --color-background: var(--palette-50);
+    --color-foreground: var(--palette-600);
+    --color-muted-foreground: var(--palette-400);
+    --color-headings: var(--palette-800);
+    --color-border: var(--palette-300);
+    --color-primary: oklch(0.55 0.15 250);         /* 블루 계열 */
+    --color-accent: oklch(0.65 0.12 25);           /* 오렌지 계열 */
+}
+
+/* 다크 모드 색상 팔레트 */
+.dark {
+    --palette-base: #000;
+    --palette-50: oklch(0.25 0.003 107.8);          /* #0a0a0a */
+    --palette-100: oklch(0.3 0.003 107.8);          /* #171717 */
+    --palette-200: oklch(0.35 0.003 107.8);         /* #262626 */
+    --palette-300: oklch(0.4 0.003 107.8);          /* #373737 */
+    --palette-400: oklch(0.5 0.003 107.8);          /* #525252 */
+    --palette-500: oklch(0.67 0.003 107.8);         /* #8a8a8a */
+    --palette-600: oklch(0.74 0.003 107.8);         /* #a3a3a3 */
+    --palette-700: oklch(0.89 0.003 107.8);         /* #d4d4d4 */
+    --palette-800: oklch(0.93 0.003 107.8);         /* #e5e5e5 */
+    --palette-900: oklch(0.97 0.003 107.8);         /* #f5f5f5 */
+    --palette-950: oklch(0.98 0.005 95.9);          /* #fafafa */
+
+    /* 다크 모드 테마 색상 */
+    --color-background: var(--palette-100);
+    --color-foreground: var(--palette-700);
+    --color-muted-foreground: var(--palette-500);
+    --color-headings: var(--palette-800);
+    --color-border: var(--palette-300);
+    --color-primary: oklch(0.65 0.15 250);         /* 더 밝은 블루 */
+    --color-accent: oklch(0.75 0.12 25);           /* 더 밝은 오렌지 */
+}
+
+/* 기본 스타일 리셋 */
 * {
     margin: 0;
     padding: 0;
@@ -17,12 +70,53 @@
 }
 
 body {
-    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
-    background-color: var(--bg);
-    color: var(--text);
+    font-family: "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    background-color: var(--color-background);
+    color: var(--color-foreground);
     line-height: 1.6;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    transition: background-color 0.3s ease, color 0.3s ease;
+    min-height: 100vh;
 }
 
+/* 테마 토글 버튼 */
+.theme-toggle {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    z-index: 100;
+}
+
+#theme-toggle-btn {
+    background: var(--palette-200);
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--color-foreground);
+    font-size: 1.1rem;
+}
+
+#theme-toggle-btn:hover {
+    background: var(--palette-300);
+    transform: scale(1.05);
+}
+
+.dark #theme-toggle-btn {
+    background: var(--palette-200);
+    color: var(--color-foreground);
+}
+
+.dark #theme-toggle-btn:hover {
+    background: var(--palette-300);
+}
+
+/* 컨테이너 */
 .container {
     max-width: 680px;
     margin: 0 auto;
@@ -33,6 +127,7 @@ body {
     align-items: center;
 }
 
+/* 프로필 섹션 */
 .profile {
     text-align: center;
     margin-bottom: 2rem;
@@ -43,9 +138,9 @@ body {
     height: 150px;
     border-radius: 50%;
     margin-bottom: 1rem;
-    border: 3px solid var(--primary);
+    border: 3px solid var(--color-primary);
     padding: 3px;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
 .profile-img:hover {
@@ -57,34 +152,39 @@ body {
 }
 
 .nickname {
-    color: var(--primary);
+    color: var(--color-primary);
     font-size: 1.5rem;
     font-weight: 600;
     margin: 0;
+    transition: color 0.3s ease;
 }
 
 .name {
-    color: var(--text);
+    color: var(--color-headings);
     font-size: 1.2rem;
     font-weight: 500;
     margin: 0;
     opacity: 0.9;
+    transition: color 0.3s ease;
 }
 
 .bio {
-    color: var(--subtext);
+    color: var(--color-muted-foreground);
     font-size: 1.1rem;
     margin-bottom: 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
+    transition: color 0.3s ease;
 }
 
 .bio i {
-    color: var(--accent);
+    color: var(--color-accent);
+    transition: color 0.3s ease;
 }
 
+/* 소셜 아이콘 */
 .social-icons {
     display: flex;
     gap: 1.5rem;
@@ -92,16 +192,17 @@ body {
 }
 
 .social-icon {
-    color: var(--text);
+    color: var(--color-foreground);
     font-size: 1.8rem;
     transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .social-icon:hover {
-    color: var(--primary);
+    color: var(--color-primary);
     transform: translateY(-3px);
 }
 
+/* 링크 버튼 */
 .links {
     width: 100%;
     display: flex;
@@ -111,35 +212,50 @@ body {
 }
 
 .link-button {
-    background-color: var(--surface);
-    color: var(--text);
+    background-color: var(--palette-100);
+    color: var(--color-foreground);
     text-decoration: none;
     padding: 1rem;
     border-radius: 12px;
     text-align: center;
     transition: all 0.3s ease;
-    border: 1px solid var(--overlay);
+    border: 1px solid var(--color-border);
 }
 
 .link-button:hover {
-    background-color: var(--primary);
-    color: var(--bg);
+    background-color: var(--color-primary);
+    color: var(--color-white);
     transform: translateY(-2px);
+    border-color: var(--color-primary);
 }
 
 .link-text {
     font-weight: 500;
 }
 
+/* 푸터 */
 footer {
     margin-top: auto;
     text-align: center;
-    color: var(--subtext);
+    color: var(--color-muted-foreground);
     font-size: 0.9rem;
     padding: 1rem 0;
+    transition: color 0.3s ease;
 }
 
+/* 반응형 디자인 */
 @media (max-width: 480px) {
+    .theme-toggle {
+        top: 1rem;
+        right: 1rem;
+    }
+
+    #theme-toggle-btn {
+        width: 2.5rem;
+        height: 2.5rem;
+        font-size: 1rem;
+    }
+
     .container {
         padding: 1rem;
     }
@@ -147,18 +263,6 @@ footer {
     .profile-img {
         width: 120px;
         height: 120px;
-    }
-    
-    h1 {
-        font-size: 1.5rem;
-    }
-    
-    .social-icon {
-        font-size: 1.5rem;
-    }
-    
-    .name-container {
-        gap: 0.5rem;
     }
     
     .nickname {
@@ -171,5 +275,9 @@ footer {
     
     .bio {
         font-size: 1rem;
+    }
+    
+    .social-icon {
+        font-size: 1.5rem;
     }
 } 
